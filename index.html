@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Quiz educativo sobre electricidad y consumo energético con estadísticas de resultados.">
+  <title>Reto Energético | Quiz de electricidad</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">QUIZ EDUCATIVO · ENERGÍA Y SOSTENIBILIDAD</div>
+      <h1>Reto <span>Energético</span></h1>
+      <p>¿Qué tanto sabes sobre electricidad y consumo responsable?</p>
+      <div class="hero-tags"><span>10 preguntas</span><span>Calificación automática</span><span>Estadísticas grupales</span></div>
+    </div>
+  </header>
+
+  <main class="container">
+    <nav class="tabs" aria-label="Secciones">
+      <button class="tab active" data-view="quizView">Participar en el quiz</button>
+      <button class="tab" data-view="statsView">Estadísticas del grupo</button>
+    </nav>
+
+    <section id="quizView" class="view">
+      <div class="card intro-card">
+        <div class="section-kicker">01 / PARTICIPANTE</div>
+        <h2>Comencemos</h2>
+        <p>Ingresa un nombre o identificador y responde las preguntas. Al finalizar, tu resultado se agregará a las estadísticas de este navegador.</p>
+        <form id="startForm">
+          <label for="participantName">Nombre o identificador del participante</label>
+          <div class="input-row">
+            <input id="participantName" name="participantName" maxlength="80" placeholder="Ej. Participante 01" required>
+            <button class="button primary" type="submit">Comenzar →</button>
+          </div>
+        </form>
+        <p class="small-note">Privacidad: no ingreses datos personales sensibles. Esta versión guarda los resultados en este navegador.</p>
+      </div>
+
+      <div id="quizPanel" class="card hidden">
+        <div class="quiz-topline"><span id="questionCounter">Pregunta 1 de 10</span><span id="scoreLive">0 correctas</span></div>
+        <div class="progress"><div id="progressBar"></div></div>
+        <div class="section-kicker" id="questionCategory">CONCEPTOS BÁSICOS</div>
+        <h2 id="questionText"></h2>
+        <div id="answers" class="answers"></div>
+        <div id="feedback" class="feedback hidden" role="status"></div>
+        <div class="quiz-actions"><button id="nextButton" class="button primary" disabled>Siguiente pregunta →</button></div>
+      </div>
+
+      <div id="resultPanel" class="card result-card hidden">
+        <div class="section-kicker">RESULTADO INDIVIDUAL</div>
+        <div class="result-score" id="finalScore">80%</div>
+        <h2 id="resultTitle">¡Buen trabajo!</h2>
+        <p id="resultMessage"></p>
+        <div class="result-grid">
+          <div><strong id="resultCorrect">8/10</strong><span>Respuestas correctas</span></div>
+          <div><strong id="resultWrong">2</strong><span>Respuestas incorrectas</span></div>
+        </div>
+        <button id="newParticipant" class="button primary">Registrar otra persona</button>
+        <button id="goStats" class="button secondary">Ver estadísticas del grupo</button>
+      </div>
+    </section>
+
+    <section id="statsView" class="view hidden">
+      <div class="section-heading">
+        <div><div class="section-kicker">02 / RESULTADOS ACUMULADOS</div><h2>Estadísticas del grupo</h2></div>
+        <div class="actions"><button id="exportCsv" class="button secondary">Exportar CSV</button><button id="clearData" class="button danger">Borrar resultados</button></div>
+      </div>
+      <div id="emptyStats" class="card empty-state"><div class="empty-icon">↗</div><h3>Aún no hay resultados</h3><p>Completa el quiz con una persona y después registra más participantes. Las estadísticas se calcularán automáticamente.</p><button class="button primary" id="startFromStats">Iniciar primer quiz</button></div>
+      <div id="statsContent" class="hidden">
+        <div class="metrics">
+          <article class="metric"><span>Participantes</span><strong id="statParticipants">0</strong><small>Quizzes completados</small></article>
+          <article class="metric"><span>Promedio grupal</span><strong id="statAverage">0%</strong><small>Calificación media</small></article>
+          <article class="metric"><span>Aprobación</span><strong id="statPass">0%</strong><small>Calificación ≥ 60%</small></article>
+          <article class="metric"><span>Mejor resultado</span><strong id="statBest">0%</strong><small>Calificación máxima</small></article>
+        </div>
+        <div class="charts-grid">
+          <article class="card chart-card"><h3>Distribución de calificaciones</h3><p>Participantes por rango de resultado</p><canvas id="scoreChart"></canvas></article>
+          <article class="card chart-card"><h3>Dominio por pregunta</h3><p>Porcentaje de respuestas correctas en cada pregunta</p><canvas id="questionChart"></canvas></article>
+        </div>
+        <article class="card table-card">
+          <div class="table-heading"><div><h3>Resultados individuales</h3><p>Los resultados se muestran del más reciente al más antiguo.</p></div><span id="recordCount" class="badge">0 registros</span></div>
+          <div class="table-wrap"><table><thead><tr><th>Participante</th><th>Fecha y hora</th><th>Aciertos</th><th>Calificación</th><th>Estado</th></tr></thead><tbody id="resultsTable"></tbody></table></div>
+        </article>
+        <p class="small-note">Las estadísticas consideran los registros guardados en este navegador. Para reunir resultados de varios dispositivos o compartirlos entre usuarios, consulta el apartado “Publicarlo gratis” del README.</p>
+      </div>
+    </section>
+  </main>
+  <footer><span>RETO ENERGÉTICO</span><span>Aprender hoy para consumir mejor mañana.</span></footer>
+  <script src="app.js"></script>
+</body>
+</html>
